@@ -19,7 +19,7 @@
     <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <bigtable.version>1.10.0</bigtable.version>
+    <bigtable.version>1.11.0</bigtable.version>
   </properties>
 
   <dependencies>
@@ -45,7 +45,7 @@
 
     <dependency>
       <groupId>com.google.cloud.bigtable</groupId>
-      <artifactId>bigtable-hbase-1.x</artifactId>
+      <artifactId>bigtable-client-core</artifactId>
       <version>${bigtable.version}</version>
     </dependency>
 
