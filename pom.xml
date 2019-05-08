@@ -19,7 +19,7 @@
     <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <bigtable.version>1.11.0</bigtable.version>
+    <bigtable.version>1.11.1-SNAPSHOT</bigtable.version>
   </properties>
 
   <dependencies>

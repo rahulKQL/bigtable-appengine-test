@@ -17,7 +17,6 @@
 package com.example.appengine.demos.springboot;
 
 import com.google.cloud.PlatformInformation;
-import java.io.IOException;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloworldController {
 
-  private final BigtableCoreTest bigtable = new BigtableCoreTest();
+  private final BigtableCoreConnect bigtable = new BigtableCoreConnect();
 
   @GetMapping("test")
   public String myTest() {

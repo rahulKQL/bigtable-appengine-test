@@ -11,16 +11,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BigtableCoreTest {
+public class BigtableCoreConnect {
 
   private static final String PROJECT_ID = "grass-clump-479";
   private static final String INSTANCE_ID = "shared-perf-2";
-  private static final String TABLE_NAME = System.getProperty("bigtable.tableName", "");
 
   private final IBigtableDataClient dataClient;
   private final IBigtableTableAdminClient adminClient;
 
-  public BigtableCoreTest(){
+  public BigtableCoreConnect(){
     try{
       BigtableOptions option = BigtableOptions.builder()
           .setProjectId(PROJECT_ID)
@@ -28,13 +27,14 @@ public class BigtableCoreTest {
           .setUserAgent("Test-App-engine")
           .setUseGCJClient(false)
           .build();
+
       final BigtableSession session =  new BigtableSession(option);
       dataClient = session.getDataClientWrapper();
       adminClient = session.getTableAdminClientWrapper();
     } catch (IOException ex){
       System.out.println("-- IOException --");
       ex.printStackTrace();
-      throw new RuntimeException();
+      throw new RuntimeException(ex);
     }
   }
 
