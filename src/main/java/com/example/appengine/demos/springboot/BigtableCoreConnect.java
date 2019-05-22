@@ -13,25 +13,28 @@ import java.util.List;
 
 public class BigtableCoreConnect {
 
-  private static final String PROJECT_ID = "grass-clump-479";
-  private static final String INSTANCE_ID = "shared-perf-2";
+  private static final String PROJECT_ID = System.getProperty("ae.project", "grass-clump-479");
+  private static final String INSTANCE_ID = System.getProperty("ae.instance", "shared-perf-2");
+  private static final String APP_PROFILE_ID = System.getProperty("ae.profile", "java-hbase");
 
   private final IBigtableDataClient dataClient;
   private final IBigtableTableAdminClient adminClient;
 
-  public BigtableCoreConnect(){
-    try{
-      BigtableOptions option = BigtableOptions.builder()
-          .setProjectId(PROJECT_ID)
-          .setInstanceId(INSTANCE_ID)
-          .setUserAgent("Test-App-engine")
-          .setUseGCJClient(false)
-          .build();
+  public BigtableCoreConnect() {
+    try {
+      BigtableOptions option =
+          BigtableOptions.builder()
+              .setProjectId(PROJECT_ID)
+              .setInstanceId(INSTANCE_ID)
+              .setAppProfileId(APP_PROFILE_ID)
+              .setUserAgent("Test-App-engine")
+              .setUseGCJClient(false)
+              .build();
 
-      final BigtableSession session =  new BigtableSession(option);
+      final BigtableSession session = new BigtableSession(option);
       dataClient = session.getDataClientWrapper();
       adminClient = session.getTableAdminClientWrapper();
-    } catch (IOException ex){
+    } catch (IOException ex) {
       System.out.println("-- IOException --");
       ex.printStackTrace();
       throw new RuntimeException(ex);
@@ -45,13 +48,14 @@ public class BigtableCoreConnect {
   public List<String> fetchRows(String tableName, String rowKey) {
     List<FlatRow> rows = dataClient.readFlatRowsList(Query.create(tableName).rowKey(rowKey));
     List<String> data = new ArrayList<>();
-    rows.forEach(x -> {
-      data.addAll(printResult(x));
-    });
+    rows.forEach(
+        x -> {
+          data.addAll(printResult(x));
+        });
     return data;
   }
 
-  public void createTable(String tableName){
+  public void createTable(String tableName) {
     CreateTableRequest request = CreateTableRequest.of(tableName).addFamily("cf");
     adminClient.createTable(request);
   }
@@ -62,14 +66,17 @@ public class BigtableCoreConnect {
     List<FlatRow.Cell> cells = flatRow.getCells();
     for (FlatRow.Cell cell : cells) {
       String printLine =
-          "Row: " + row
-              + ", Family: " + cell.getFamily()
-              + ", Qualifier: " + cell.getQualifier().toStringUtf8()
-              + ", Value: " + cell.getValue().toStringUtf8();
+          "Row: "
+              + row
+              + ", Family: "
+              + cell.getFamily()
+              + ", Qualifier: "
+              + cell.getQualifier().toStringUtf8()
+              + ", Value: "
+              + cell.getValue().toStringUtf8();
       System.out.println(printLine);
       rowData.add(printLine);
     }
     return rowData;
   }
-
 }

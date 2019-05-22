@@ -12,8 +12,8 @@ This is extension of Google's getting started samples for **Springboot on appeng
 
 eg;
 
-    http://localhost:8080/table-present/Hello-Bigtable/rowkey-89
-    
+    http://localhost:8080/table-present/AppEngineTestTable
+    http://localhost:8080/table-present/AppEngineTestTable/rowkey-89
 
 
 ## Setup
